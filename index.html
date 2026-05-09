@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบทดสอบบุคลิกภาพที่ซ่อนอยู่</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Mali', cursive;
+            background-color: #fff5f7;
+            /* Default finger cursor for the whole body */
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23ff8da1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v5"/><path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v10"/><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>'), auto;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .cute-card {
+            border-radius: 2rem;
+            box-shadow: 0 10px 25px -5px rgba(255, 182, 193, 0.4);
+            /* Reset cursor for the card content to be normal finger */
+            cursor: auto;
+        }
+        .btn-cute, button {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* Pointing finger for buttons */
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23ff4d6d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v5"/><path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v10"/><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>'), pointer;
+        }
+        .btn-cute:hover {
+            transform: scale(1.05);
+        }
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.1); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.1); }
+            70% { transform: scale(1); }
+        }
+        .animate-heart {
+            animation: heartBeat 1.5s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div id="app" class="w-full max-w-lg bg-white p-8 cute-card relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute top-0 right-0 -mt-8 -mr-8 w-32 h-32 bg-pink-100 rounded-full opacity-50"></div>
+        <div class="absolute bottom-0 left-0 -mb-8 -ml-8 w-24 h-24 bg-blue-100 rounded-full opacity-50"></div>
+
+        <div id="welcome-screen" class="fade-in text-center relative z-10">
+            <div class="mb-6 flex justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-20 h-20 text-pink-400 animate-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/>
+                </svg>
+            </div>
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">แบบทดสอบบุคลิกภาพ</h1>
+            <p class="text-gray-600 mb-8 text-lg">มาค้นหากันว่าบุคลิกภายในของคุณเป็นคนสไตล์ไหน? <br>เรียบง่าย ช่างฝัน หรือเป็นผู้นำ?</p>
+            <button onclick="startQuiz()" class="btn-cute bg-pink-400 hover:bg-pink-500 text-white font-bold py-3 px-10 rounded-full text-xl shadow-lg">
+                เริ่มทำแบบทดสอบ
+            </button>
+        </div>
+
+        <div id="quiz-screen" class="hidden fade-in relative z-10">
+            <div class="mb-6">
+                <div class="flex justify-between items-center mb-2">
+                    <span id="progress-text" class="text-pink-400 font-medium text-sm">ข้อที่ 1/10</span>
+                    <span id="category-hint" class="text-gray-400 text-xs italic">สัญชาตญาณและความรู้สึก</span>
+                </div>
+                <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="progress-bar bg-pink-300 h-full w-0"></div>
+                </div>
+            </div>
+            
+            <h2 id="question-text" class="text-xl font-bold text-gray-800 mb-8 min-h-[4rem]">คำถามกำลังโหลด...</h2>
+            
+            <div id="options-container" class="space-y-4">
+                <!-- Options will be injected here -->
+            </div>
+        </div>
+
+        <div id="result-screen" class="hidden fade-in text-center relative z-10">
+            <div class="mb-6 flex justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-20 h-20 text-yellow-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>
+                </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">วิเคราะห์ผลสำเร็จ!</h2>
+            <p class="text-pink-500 font-bold text-3xl mb-4" id="result-title"></p>
+            <div class="bg-gray-50 p-6 rounded-2xl mb-8 text-left border border-pink-100">
+                <p id="result-description" class="text-gray-700 leading-relaxed"></p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="shareResult()" class="btn-cute bg-pink-400 hover:bg-pink-500 text-white font-bold py-3 px-8 rounded-full flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                    แชร์ผลลัพธ์
+                </button>
+                <button onclick="restartQuiz()" class="btn-cute bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 px-8 rounded-full">
+                    ทำใหม่อีกครั้ง
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
